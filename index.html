@@ -19,43 +19,48 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #fff;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 40px 30px;
+      background: #ffffff;
+      padding: 35px 25px;
       border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      max-width: 350px;
-      width: 90%;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      max-width: 360px;
+      width: 92%;
+      color: #333;
     }
 
     h1 {
-      font-size: 26px;
+      font-size: 24px;
       margin-bottom: 10px;
+      color: #ff4d6d;
     }
 
     p {
-      font-size: 16px;
-      margin-bottom: 30px;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 160px;
+      margin-bottom: 20px;
     }
 
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       position: relative;
     }
 
     button {
-      padding: 12px 22px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 30px;
-      font-size: 16px;
+      border-radius: 25px;
+      font-size: 15px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
     }
 
     #yesBtn {
@@ -64,9 +69,10 @@
     }
 
     #noBtn {
-      background: white;
+      background: #ffe3e8;
       color: #ff4d6d;
-      position: relative;
+      position: absolute;
+      right: 0;
     }
 
     .final {
@@ -74,11 +80,11 @@
     }
 
     .final h1 {
-      font-size: 28px;
+      font-size: 26px;
     }
 
     .heart {
-      font-size: 40px;
+      font-size: 45px;
       animation: beat 1s infinite;
     }
 
@@ -91,6 +97,7 @@
 <body>
 
   <div class="card" id="mainCard">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa3BzZXN3dHV6dG8ycWJqemN3cTBpZ2JtcG9qZ3d2a3h3a3dqZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qK1h8F7q1tXQpJQY0A/giphy.gif" alt="cute gif">
     <h1>Tvananya 💕</h1>
     <p>Will you be my Valentine?</p>
 
@@ -107,21 +114,44 @@
     <p>Happy Valentine’s 💖</p>
   </div>
 
+  <audio id="yesSound">
+    <source src="https://www.soundjay.com/buttons/sounds/button-4.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const mainCard = document.getElementById("mainCard");
     const finalCard = document.getElementById("finalCard");
+    const yesSound = document.getElementById("yesSound");
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 200 - 100;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+    let scale = 1;
+
+    noBtn.addEventListener("mouseover", moveNo);
+    noBtn.addEventListener("touchstart", moveNo);
+
+    function moveNo() {
+      const x = Math.random() * 180 - 90;
+      const y = Math.random() * 180 - 90;
+      scale -= 0.08;
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    }
 
     yesBtn.addEventListener("click", () => {
-      mainCard.style.display = "none";
-      finalCard.style.display = "block";
+      yesSound.play();
+
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+
+      setTimeout(() => {
+        mainCard.style.display = "none";
+        finalCard.style.display = "block";
+      }, 400);
     });
   </script>
 
