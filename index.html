@@ -52,6 +52,7 @@
       justify-content: center;
       gap: 12px;
       position: relative;
+      height: 50px;
     }
 
     button {
@@ -97,7 +98,7 @@
 <body>
 
   <div class="card" id="mainCard">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa3BzZXN3dHV6dG8ycWJqemN3cTBpZ2JtcG9qZ3d2a3h3a3dqZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qK1h8F7q1tXQpJQY0A/giphy.gif" alt="cute gif">
+    <img src="https://raw.githubusercontent.com/kaushikmallick1350/valentine-assets/main/cute-heart.gif" alt="love">
     <h1>Tvananya 💕</h1>
     <p>Will you be my Valentine?</p>
 
@@ -114,8 +115,8 @@
     <p>Happy Valentine’s 💖</p>
   </div>
 
-  <audio id="yesSound">
-    <source src="https://www.soundjay.com/buttons/sounds/button-4.mp3" type="audio/mpeg">
+  <audio id="yesSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3" type="audio/mpeg">
   </audio>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -129,22 +130,23 @@
 
     let scale = 1;
 
-    noBtn.addEventListener("mouseover", moveNo);
-    noBtn.addEventListener("touchstart", moveNo);
-
     function moveNo() {
       const x = Math.random() * 180 - 90;
-      const y = Math.random() * 180 - 90;
-      scale -= 0.08;
+      const y = Math.random() * 120 - 60;
+      scale = Math.max(scale - 0.07, 0.4);
       noBtn.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
     }
 
+    noBtn.addEventListener("mouseover", moveNo);
+    noBtn.addEventListener("touchstart", moveNo);
+
     yesBtn.addEventListener("click", () => {
-      yesSound.play();
+      yesSound.currentTime = 0;
+      yesSound.play().catch(() => {});
 
       confetti({
-        particleCount: 150,
-        spread: 80,
+        particleCount: 160,
+        spread: 90,
         origin: { y: 0.6 }
       });
 
